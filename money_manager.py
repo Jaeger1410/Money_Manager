@@ -245,33 +245,6 @@ def showData():
                 addData = row[0] + ' ' + str(row[1])
                 showExpenses.insert(showExpenses.size()+1,addData)
         myDB.close()
-
-def computeLeftover():
-    
-    Table = showTables.get(ACTIVE)
-    
-    myDB = mysql.connector.connect(host='localhost',user='root',passwd='Cc.198422231',database='Finances')
-    myCur = myDB.cursor()
-    myCur.execute('select * from '+Table+'')
-    
-    data = myCur.fetchall()
-    
-    totalIncome = []
-    totalExpenses = []
-    
-    for row in data:
-        if not row[1]:
-            totalIncome.append(row[2])
-        elif not row[2]:
-            totalExpenses.append(row[1])
-    
-    leftoverTotal = sum(totalIncome) - sum(totalExpenses)
-    
-    leftoversLbl.config(text = f'Total Remaining: {leftoverTotal}')
-    
-    if enterQuery.get() == "":
-        pass
-    myDB.close()
     
     
 def markPaid():
@@ -314,7 +287,35 @@ def executeQuery():
         resetFields()
         
         myDB.close()
-        
+
+def computeLeftover():
+    
+    Table = showTables.get(ACTIVE)
+    
+    myDB = mysql.connector.connect(host='localhost',user='root',passwd='Cc.198422231',database='Finances')
+    myCur = myDB.cursor()
+    myCur.execute('select * from '+Table+'')
+    
+    data = myCur.fetchall()
+    
+    totalIncome = []
+    totalExpenses = []
+    
+    for row in data:
+        if not row[1]:
+            totalIncome.append(row[2])
+        elif not row[2]:
+            totalExpenses.append(row[1])
+    
+    leftoverTotal = sum(totalIncome) - sum(totalExpenses)
+    
+    leftoversLbl.config(text = f'Total Remaining: {leftoverTotal}')
+    
+    if enterQuery.get() == "":
+        pass
+    myDB.close()
+
+
 # Create window
 window = Tk()
 window.geometry("700x500")
@@ -388,6 +389,7 @@ selectTableBtn.place(x=570,y=240)
 
 markPaidBtn = Button(window,text='Mark\\Unmark Paid',font=('Serif',12),bg='green',command=markPaid)
 markPaidBtn.place(x=20,y=310)
+
 
 # Create Listboxes
 showExpenses = Listbox(window)
