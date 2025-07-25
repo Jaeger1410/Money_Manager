@@ -390,7 +390,6 @@ selectTableBtn.place(x=570,y=240)
 markPaidBtn = Button(window,text='Mark\\Unmark Paid',font=('Serif',12),bg='green',command=markPaid)
 markPaidBtn.place(x=20,y=310)
 
-
 # Create Listboxes
 showExpenses = Listbox(window)
 showExpenses.place(x=260,y=60)
