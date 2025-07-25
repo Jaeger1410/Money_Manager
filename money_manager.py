@@ -342,11 +342,6 @@ leftoversLbl.place(x=20,y=480)
 selectedTableLbl = Label(window, text = ' ')
 selectedTableLbl.place(x=570,y=300)
 
-# =============================================================================
-# search = Label(window, text='Search', font=('Serif',12))
-# search.place(x=40,y=410)
-# =============================================================================
-
 # Create Entries
 enterItem = Entry(window)
 enterItem.place(x=100,y=60)
