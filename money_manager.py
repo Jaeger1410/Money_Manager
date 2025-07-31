@@ -33,7 +33,7 @@ def addExpense():
     else: # Insert data in Finances table
         myDB = mysql.connector.connect(host='localhost',user='root',passwd='Cc.198422231',database='Finances')
         myCur = myDB.cursor()
-        myCur.execute('insert into '+Table+' (Item,Expenses)  values("'+Item+'",'+expense+')')
+        myCur.execute('insert into '+Table+' (Item, Expenses)  values("'+Item+'",'+expense+')')
         myDB.commit()
         
         # Clear out entries from fields
@@ -62,7 +62,7 @@ def addIncome():
         myCur = myDB.cursor()
         
                                                 
-        myCur.execute('insert into '+Table+' (Item,Income) values("'+Item+'",'+income+')')
+        myCur.execute('insert into '+Table+' (Item, Income) values("'+Item+'",'+income+')')
         myDB.commit()
         
         # Clear out entries from fields
