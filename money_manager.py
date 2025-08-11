@@ -17,7 +17,7 @@ Then this should output the Surplus.
 from tkinter import *
 from tkinter import messagebox
 import mysql.connector
-
+import csv
 
 def addExpense():
     # Read data provided by user
@@ -151,6 +151,24 @@ def deleteData():
         messagebox.showinfo('Delete Status','Data Deleted Succesfully')
         myDB.close()
 
+def saveTable():
+    Table = showTables.get(ACTIVE)
+    myDB = mysql.connector.connect(host='localhost',user='root',passwd='Cc.198422231',database='Finances')
+    myCur = myDB.cursor()
+    myCur.execute('select * from '+Table+'')
+    data = myCur.fetchall()
+    with open(Table+'.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Item', 'Expenses', 'Income'])
+        for row in data:
+            writer.writerow(row)
+            
+            
+    messagebox.showinfo('Save Status','Table Saved Successfully')
+    myDB.close()
+
+    
+
 def resetFields():
     enterItem.delete(0,"end")
     enterPrice.delete(0,"end")
@@ -164,7 +182,7 @@ def createTable():
     
     myDB = mysql.connector.connect(host='localhost',user='root',passwd='Cc.198422231',database='Finances')
     myCur = myDB.cursor()
-    myCur.execute('create table '+newTable+'(Item varchar(100) primary key, Expenses int, Income int)')
+    myCur.execute('create table '+newTable+'(item_id varchar(100) primary key, item_name varchar(100), Expenses int, Income int)')
     myDB.commit()
         
     # Clear out fields
@@ -389,6 +407,9 @@ selectTableBtn.place(x=570,y=240)
 
 markPaidBtn = Button(window,text='Mark\\Unmark Paid',font=('Serif',12),bg='green',command=markPaid)
 markPaidBtn.place(x=20,y=310)
+
+saveTableBtn = Button(window, text='Save Table', font=('Sans',12),bg='white',command=saveTable)
+saveTableBtn.place(x=390,y=310)
 
 # Create Listboxes
 showExpenses = Listbox(window)
